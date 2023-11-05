@@ -1,0 +1,51 @@
+.query-list {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-gap: 20px;
+}
+
+.query-list a {
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 6px;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s;
+}
+.query-list a:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+.query-list h4 {
+  font-size: 0.9em;
+  color: var(--heading-color);
+}
+
+.query-list p {
+  color: var(--text-color);
+  font-size: 0.9em;
+}
+
+.query-list .query-by {
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.query-list .query-by .profile-link {
+  padding: 0px;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0);
+  text-decoration: underline;
+}
+
+.query-list ul {
+  margin: 10px 0;
+  display: flex;
+}
+
+.query-list li {
+  margin-right: 10px;
+}

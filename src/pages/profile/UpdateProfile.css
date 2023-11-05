@@ -1,0 +1,40 @@
+.update-form {
+  width: 360px;
+  margin: 60px auto;
+  padding: 40px 50px 40px 50px;
+  border: 1px solid #ddd; /* Add a border */
+  border-radius: 10px; /* Round the corners */
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05); /* Add a shadow effect */
+  background: #fff;
+}
+
+.update-form h2 {
+  margin-bottom: 20px;
+}
+
+.update-form label {
+  margin-bottom: 15px;
+}
+
+.update-form span {
+  margin-bottom: 5px;
+}
+
+.update-form .btn {
+  background: #fff;
+  padding: 8px 12px;
+  margin-top: 10px;
+  margin-bottom: 0;
+  border-radius: 50px;
+  width: 33%;
+  margin-left: 240px;
+  color: var(--primary-color);
+  cursor: pointer;
+  font-size: 1em;
+  border: 1px solid var(--primary-color);
+}
+
+.update-form .btn:hover {
+  color: #fff;
+  background-color: var(--primary-color);
+}

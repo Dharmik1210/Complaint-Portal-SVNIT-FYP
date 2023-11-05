@@ -1,0 +1,71 @@
+/* signup.css */
+.signup {
+  width: 360px;
+  height: auto;
+  margin: 60px auto;
+  padding: 40px 50px 40px 50px;
+  border: 1px solid #ddd; /* Add a border */
+  border-radius: 10px; /* Round the corners */
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05); /* Add a shadow effect */
+  background: #fff;
+}
+
+.signup h2 {
+  margin-bottom: 20px;
+}
+
+.signup .btn {
+  width: 100%;
+}
+
+.signup input:hover {
+  --primary-color: #199dcc;
+  border: 1px solid var(--primary-color);
+}
+
+.signup .verification-guide {
+  background-color: #f3f3f3;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 16px;
+  margin: 25px 0px 25px 0px;
+}
+
+.signup .verification-guide p {
+  margin: 10px 0;
+}
+
+.signup .verification-guide .timer-text {
+  font-weight: 500;
+}
+
+@media screen and (max-width: 768px) {
+  .signup {
+    width: 80%;
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .signup {
+    width: 90%;
+    padding: 15px;
+    height: auto;
+  }
+
+  .signup h2 {
+    font-size: 18px;
+  }
+
+  .signup label {
+    font-size: 14px;
+  }
+
+  .signup input {
+    font-size: 14px;
+  }
+
+  .signup .btn {
+    font-size: 16px;
+  }
+}

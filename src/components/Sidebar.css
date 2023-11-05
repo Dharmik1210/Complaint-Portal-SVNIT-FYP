@@ -1,0 +1,92 @@
+.sidebar {
+  width: 285px;
+  min-width: 285px;
+  background: var(--primary-color);
+  min-height: 100vh;
+  box-sizing: border-box;
+  position: relative;
+  color: #fff;
+  transition: transform 0.3s ease;
+}
+
+.sidebar.collapsed {
+  width: 50px;
+  transform: translateX(-235px);
+}
+.sidebar-content {
+  position: fixed;
+  width: inherit;
+}
+
+.sidebar .user {
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 1px;
+  padding: 40px 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sidebar .links {
+  margin-top: 80px;
+  margin-left: 20px;
+}
+
+.sidebar .links li {
+  margin-top: 10px;
+  opacity: 1;
+}
+
+.sidebar .links a {
+  display: flex;
+  padding: 10px;
+  text-decoration: none;
+  width: 100%;
+  color: #fff;
+  box-sizing: border-box;
+  opacity: 1;
+}
+
+.sidebar .links img {
+  margin-right: 10px;
+  filter: invert(100%);
+  width: 24px;
+  height: 27.2px;
+}
+
+.sidebar .links a.active {
+  color: #555;
+  background: var(--bg-color);
+  border-radius: 20px 0 0 20px;
+}
+
+.sidebar .links .active img {
+  filter: invert(40%);
+}
+/* Add this to your Sidebar.css file */
+
+.toggle-button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: #f4f4f4; Background color for the button */
+  color: #fff;
+  width: 40px; /* Adjust the width as needed */
+  height: 40px; /* Adjust the height as needed */
+  /* border-radius: 50%;  */
+  border-radius: 10px;
+  /* border-color: black; */
+  position: absolute;
+  margin-left: 10px;
+  top: 10px;
+  left: 10px;
+  transition: background-color 0.5 s ease; /* Add a transition for smoother hover effect */
+  z-index: 2;
+  /* Center the icon inside the button */
+}
+
+.toggle-button:hover {
+  /* background-color: #fff; */
+  transform: scale(1.1);
+  /* color: var(--primary-color); Change the background color on hover */
+}

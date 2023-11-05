@@ -1,0 +1,58 @@
+.filter {
+  /* margin: 30 30 30 0; */
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 0;
+  display: flex;
+  /* text-align: center; */
+  align-items: center;
+}
+
+.filter label {
+  font-size: 1.2em;
+  margin-right: 10px;
+  margin-bottom: 0;
+  /* padding: 10px; */
+}
+
+.filter select {
+  appearance: auto;
+  background-color: transparent;
+  /* border: none; */
+  font-family: inherit;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  transition: border-color 0.3 ease-in-out;
+  outline: none;
+}
+
+.filter select:hover {
+  border-color: #877983;
+}
+
+.filter select:focus {
+  border-color: #2e88a1;
+  box-shadow: 0px 0px 5px rgb(135, 121, 131, 0.5);
+}
+
+.filter option {
+  background-color: rgb(235, 244, 247);
+  color: black;
+  font-weight: 500;
+  font-size: 1em;
+}
+
+option :hover {
+  background-color: #2e88a1;
+  color: black;
+}
+
+.filter option:hover {
+  background-color: orange;
+  color: black;
+}
