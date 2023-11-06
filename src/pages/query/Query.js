@@ -136,12 +136,6 @@ export default function Query() {
   };
 
   const handleStatusChange = (status) => {
-    // update all individual schema
-    // const msg =
-    //   'This will mark complaint as' + status === 'accepeted'
-    //     ? 'resoloved.'
-    //     : { status } + '.';
-    // const msg1 = toString(msg);
     if (status === 'accepted') {
       Swal.fire({
         title: 'Are you sure?',
@@ -231,6 +225,9 @@ export default function Query() {
                 </li>
                 <li>
                   <span>Exact Location: </span> {complaint.exactLocation}
+                </li>
+                <li>
+                  <span>Status:</span> {complaint.status}
                 </li>
                 <li>
                   <span>Raised By:</span>{' '}
