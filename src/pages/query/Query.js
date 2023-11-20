@@ -367,7 +367,7 @@ export default function Query() {
                         ))}
                     </ul>
 
-                    {user.displayName !== 'student' && (
+                    {user.photoURL !== 'student' && (
                       <form
                         className="add-comment"
                         onSubmit={handleSubmitComment}
