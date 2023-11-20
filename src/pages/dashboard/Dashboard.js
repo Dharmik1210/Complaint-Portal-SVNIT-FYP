@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDocument } from '../../hooks/useDocument';
 import { useAuthContext } from '../../hooks/useAuthContext';
 
 // components
 import Filter from '../../components/Filter';
 import QueryList from '../../components/QueryList';
+import { Doughnut } from 'react-chartjs-2';
 
 // styles
 import './Dashboard.css';
@@ -14,20 +15,98 @@ export default function Dashboard() {
   const { document, error } = useDocument('users', user.uid);
   const [isAdmin, setIsAdmin] = useState(false);
   const [complaints, setComplaints] = useState(null);
-
+  const [accept, setAccept] = useState(0);
+  const [reject, setReject] = useState(0);
+  const [pending, setPending] = useState(0);
+  const chartRef = useRef(null);
   const [filter, setFilter] = useState('all');
   const filterList = ['all', 'hostel', 'department', 'quarters', 'other'];
+  const [renderChart, setRenderChart] = useState(false);
+
+  // const ComplaintsChart = ({ data }) => {
+  //   const labels = Object.keys(data);
+  //   const values = Object.values(data);
+
+  //   const totalComplaints = values.reduce((total, value) => total + value, 0);
+
+  //   const chartData = {
+  //     labels: labels,
+  //     datasets: [
+  //       {
+  //         data: values,
+  //         backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'], // You can customize these colors
+  //         hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+  //       },
+  //     ],
+  //   };
+
+  //   return (
+  //     <div>
+  //       <Doughnut
+  //         ref={(chart) => (chartRef.current = chart)}
+  //         data={chartData}
+  //         options={{
+  //           cutoutPercentage: 70, // Controls the size of the hole to make it a donut chart
+  //           tooltips: {
+  //             callbacks: {
+  //               label: (tooltipItem, data) => {
+  //                 const label = data.labels[tooltipItem.index] || '';
+  //                 const value = data.datasets[0].data[tooltipItem.index] || 0;
+  //                 return `${label}: ${value} (${(
+  //                   (value / totalComplaints) *
+  //                   100
+  //                 ).toFixed(1)}%)`;
+  //               },
+  //             },
+  //           },
+  //         }}
+  //       />
+  //       <p style={{ textAlign: 'center' }}>Total: {totalComplaints}</p>
+  //     </div>
+  //   );
+  // };
 
   useEffect(() => {
     if (document) {
       const pendingComplaints = document.complaints.filter(
         (complaint) => complaint.status === 'pending'
       );
+      const acceptedComplaints = document.complaints.filter(
+        (complaint) => complaint.status === 'accepted'
+      );
+      const rejectedComplaints =
+        document.complaints.length -
+        (pendingComplaints.length + acceptedComplaints.length);
+      // console.log(pendingComplaints.length);
+      // console.log(rejectedComplaints);
+      // console.log(acceptedComplaints.length);
+      // console.log(document.complaints.length);
+      setPending(pendingComplaints.length);
+      setAccept(acceptedComplaints.length);
+      setReject(rejectedComplaints.length);
       setComplaints(pendingComplaints);
       setIsAdmin(document.adminType !== 'student');
+      setRenderChart(true);
     }
+    // return () => {
+    //   console.log('hihhihihi');
+    //   // Destroy the chart instance to prevent canvas issues
+    //   const chartInstance = chartRef.current?.chartInstance;
+    //   console.log('ji');
+    //   if (chartInstance) {
+    //     console.log('hihi');
+    //     chartInstance.destroy();
+    //   }
+    //   console.log('hni');
+    //   chartRef.current = null;
+    // };
   }, [document]);
 
+  // const chartData = {
+  //   pending: pending,
+  //   accepted: accept,
+  //   rejected: reject,
+  // };
   const changeFilter = (newFilter) => {
     setFilter(newFilter);
   };
@@ -101,6 +180,7 @@ export default function Dashboard() {
       {queries && (
         <Filter changeFilter={changeFilter} filterList={filterList} />
       )}
+      {/* {renderChart && queries && <ComplaintsChart data={chartData} />} */}
       {queries && <QueryList queries={queries} isAdmin={isAdmin} />}
       {error && <p className="error">{error}</p>}
     </div>

@@ -9,22 +9,29 @@ import { useEffect } from 'react';
 import Lightbox from 'react-awesome-lightbox';
 import Swal from 'sweetalert2';
 import 'react-awesome-lightbox/build/style.css';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 // styles
 import './Query.css';
+import { timestamp } from '../../firebase/config';
 
 export default function Query() {
   const { id } = useParams();
   const { user } = useAuthContext();
   const navigate = useNavigate();
   const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
+  const [complaint, setComplaint] = useState(null);
+  const [userObj, setUserObj] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [showChat, setShowChat] = useState(false);
+  const [newComment, setNewComment] = useState('');
+
   const { updateDocument, response: updateRes } = useFirestore('users');
   const {
     deleteDocument,
     updateDocument: updatedComplaint,
     response: deleteRes,
   } = useFirestore('complaints');
-  const [complaint, setComplaint] = useState(null);
   const { document: complaintDoc, error: complaintError } = useDocument(
     'complaints',
     id
@@ -40,10 +47,6 @@ export default function Query() {
   const { document: A, error: AError } = useDocument('users', Constants.A_ID);
   const { document: B, error: BError } = useDocument('users', Constants.B_ID);
   const { document: C, error: CError } = useDocument('users', Constants.C_ID);
-  const [userObj, setUserObj] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  console.log(userDoc);
 
   // fetch from database
   useEffect(() => {
@@ -58,14 +61,16 @@ export default function Query() {
     }
   }, [complaintDoc, userDoc]);
 
+  //image viewer opening
   const openLightbox = () => {
     setLightboxIsOpen(true);
   };
-
+  //close image viewer
   const closeLightbox = () => {
     setLightboxIsOpen(false);
   };
 
+  //format the date
   const formatDate = (timestamp) => {
     const date = new Date(
       timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
@@ -74,6 +79,7 @@ export default function Query() {
     return formattedDate;
   };
 
+  //delete complaint (user-side)
   const deleteComplaint = (object) => {
     const { id: uid, ...newObject } = object;
 
@@ -87,6 +93,7 @@ export default function Query() {
     updateDocument(uid, updatedObject);
   };
 
+  //delete button function logic
   const handleDelete = (e) => {
     e.preventDefault();
     Swal.fire({
@@ -121,9 +128,10 @@ export default function Query() {
     });
   };
 
+  //complaint schema update
   const updateSchema = (object, status) => {
     const { id: uid, ...newObject } = object;
-
+    console.log('object', object);
     const updatedComplaints = newObject.complaints.map((complaint) => {
       if (complaint.complaintId === id) {
         return { ...complaint, status: status };
@@ -135,6 +143,7 @@ export default function Query() {
     updateDocument(uid, updatedObject);
   };
 
+  //status change logic
   const handleStatusChange = (status) => {
     if (status === 'accepted') {
       Swal.fire({
@@ -199,6 +208,23 @@ export default function Query() {
     }
   };
 
+  //add new comment handler
+  const handleSubmitComment = async (e) => {
+    e.preventDefault();
+    const commentToAdd = {
+      displayName: user.displayName,
+      content: newComment,
+      createdAt: timestamp.fromDate(new Date()),
+      id: Math.random(),
+    };
+    await updatedComplaint(id, {
+      comments: [...complaint.comments, commentToAdd],
+    });
+    if (!deleteRes.error) {
+      setNewComment('');
+    }
+  };
+
   return (
     <div>
       {complaint && (
@@ -235,8 +261,22 @@ export default function Query() {
                     {complaint.createdBy.displayName}
                   </Link>
                 </li>
+                {complaint.status !== 'pending' && (
+                  <li>
+                    <span>{complaint.status} by : </span>
+                  </li>
+                )}
+                <li>
+                  <button
+                    className="comments-icon"
+                    onClick={() => setShowChat(!showChat)}
+                  >
+                    <span>Click to view Comments</span>
+                  </button>
+                </li>
               </ul>
             </div>
+
             {complaint.status === 'pending' &&
               !(updateRes.isPending || deleteRes.isPending) &&
               !isAdmin && (
@@ -285,6 +325,67 @@ export default function Query() {
             <center>
               <p>[ Click above image to get better view ]</p>
             </center>
+          </div>
+          <div>
+            {showChat && (
+              <div
+                className="chatbot-overlay"
+                // onClick={() => setShowChat(false)}
+              >
+                <div className="chatbot-container">
+                  <button
+                    className="close-btn"
+                    onClick={() => setShowChat(false)}
+                  >
+                    X
+                  </button>
+                  <div className="project-comments">
+                    <h4>Complaint Comments</h4>
+
+                    <ul>
+                      {complaint.comments.length > 0 &&
+                        complaint.comments.map((comment) => (
+                          <li key={comment.id}>
+                            <div className="comment-author">
+                              {/* <Avatar src={comment.photoURL} /> */}
+                              <p>{comment.displayName}</p>
+                            </div>
+                            <div className="comment-date">
+                              <p>
+                                {formatDistanceToNow(
+                                  comment.createdAt.toDate(),
+                                  {
+                                    addSuffix: true,
+                                  }
+                                )}
+                              </p>
+                            </div>
+                            <div className="comment-content">
+                              <p>{comment.content}</p>
+                            </div>
+                          </li>
+                        ))}
+                    </ul>
+
+                    {user.displayName !== 'student' && (
+                      <form
+                        className="add-comment"
+                        onSubmit={handleSubmitComment}
+                      >
+                        <label>
+                          <span>Add new comment:</span>
+                          <textarea
+                            onChange={(e) => setNewComment(e.target.value)}
+                            value={newComment}
+                          ></textarea>
+                        </label>
+                        <button className="btn">Add Comment</button>
+                      </form>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
