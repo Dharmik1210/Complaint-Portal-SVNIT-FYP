@@ -1,23 +1,25 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { useAuthContext } from './hooks/useAuthContext';
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { useAuthContext } from "./hooks/useAuthContext";
 
 // styles
-import './App.css';
+import "./App.css";
 
 // pages & components
-import Navbar from './components/Navbar';
-import Dashboard from './pages/dashboard/Dashboard';
-import Create from './pages/create/Create';
-import Login from './pages/login/Login';
-import Signup from './pages/signup/Signup';
-import Query from './pages/query/Query';
-import Profile from './pages/profile/Profile';
-import UpdateProfile from './pages/profile/UpdateProfile';
-import Resolved from './pages/resolved/Resolved';
-import Sidebar from './components/Sidebar';
+import Navbar from "./components/Navbar";
+import Dashboard from "./pages/dashboard/Dashboard";
+import Create from "./pages/create/Create";
+import Login from "./pages/login/Login";
+import Signup from "./pages/signup/Signup";
+import Query from "./pages/query/Query";
+import Profile from "./pages/profile/Profile";
+import UpdateProfile from "./pages/profile/UpdateProfile";
+import Announcement from "./pages/announcement/Announcement";
+import Resolved from "./pages/resolved/Resolved";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   const { authIsReady, user } = useAuthContext();
+  console.log(user);
 
   return (
     <div className="App">
@@ -117,7 +119,7 @@ function App() {
                 element={
                   user ? (
                     user.emailVerified ? (
-                      user.photoURL === 'student' ? (
+                      user.photoURL === "student" ? (
                         <Create />
                       ) : (
                         <Navigate to="/" />
@@ -141,6 +143,20 @@ function App() {
                     )
                   ) : (
                     <Navigate to="/login" />
+                  )
+                }
+              />
+              <Route
+                path="/announcement"
+                element={
+                  user ? (
+                    user.emailVerified && user.photoURL !== "student" ? (
+                      <Announcement />
+                    ) : (
+                      <Navigate to="/" />
+                    )
+                  ) : (
+                    <Navigate to="/" />
                   )
                 }
               />

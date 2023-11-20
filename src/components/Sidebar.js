@@ -7,6 +7,7 @@ import ProfileIcon from '../assets/profile_icon.svg';
 import DashboardIcon from '../assets/dashboard_icon.svg';
 import ResolvedIcon from '../assets/resolved_icon.svg';
 import AddIcon from '../assets/add_icon.svg';
+import AnnouncementIcon from '../assets/announcement_icon.svg';
 
 export default function Sidebar() {
   const { user } = useAuthContext();
@@ -41,8 +42,17 @@ export default function Sidebar() {
             {user.photoURL === 'student' && (
               <li>
                 <NavLink to="/create">
-                  <img src={AddIcon} alt="add query icon" />
+                  <img src={AddIcon} alt="add  icon" />
                   <span>New Complaint</span>
+                </NavLink>
+              </li>
+            )}
+
+            {user.photoURL !== 'student' && (
+              <li>
+                <NavLink to="/announcement">
+                  <img src={AnnouncementIcon} alt="add announcement icon" />
+                  <span>Announcement</span>
                 </NavLink>
               </li>
             )}

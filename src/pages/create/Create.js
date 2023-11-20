@@ -185,6 +185,7 @@ export default function Create() {
         exactLocation,
         createdBy,
         status: 'pending',
+        comments: [],
       };
 
       if (!formError && userObj && superAdmin && A && B && C) {

@@ -1,3 +1,11 @@
 .dashboard {
   padding-bottom: 50px;
 }
+
+.dashboard .announcement {
+  max-width: 100%;
+  margin-bottom: 50px;
+  border: 1px solid black;
+  padding: 4px 0px 4px 0px;
+  border-radius: 4px;
+}
