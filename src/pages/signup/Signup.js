@@ -152,7 +152,7 @@ export default function Login() {
           </label>
           {passwordError && <p className="error">{passwordError}</p>}
           <label>
-            <span>Admission No:</span>
+            <span>Admission No / Employee ID:</span>
             <input
               type="text"
               required
@@ -161,7 +161,7 @@ export default function Login() {
             />
           </label>
           <label>
-            <span>name:</span>
+            <span>Name:</span>
             <input
               type="text"
               required
@@ -189,7 +189,7 @@ export default function Login() {
           </label>
           {departmentErr && <p className="error">{departmentErr}</p>}
           <label>
-            <span>Current Address:</span>
+            <span>Current Address (hostel/quarters):</span>
             <input
               type="text"
               required

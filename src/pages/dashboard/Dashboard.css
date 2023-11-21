@@ -5,7 +5,10 @@
 .dashboard .announcement {
   max-width: 100%;
   margin-bottom: 50px;
-  border: 1px solid black;
+  color: red;
+  font-weight: 500;
+  background-color: pink;
+  /* border: 1px solid black; */
   padding: 4px 0px 4px 0px;
   border-radius: 4px;
 }

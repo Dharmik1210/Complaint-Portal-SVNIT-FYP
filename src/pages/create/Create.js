@@ -12,10 +12,9 @@ import Swal from 'sweetalert2';
 import './Create.css';
 
 const queryCategories = [
-  { value: 'A', label: 'A' },
-  { value: 'B', label: 'B' },
-  { value: 'C', label: 'C' },
-  { value: 'D', label: 'D' },
+  { value: 'A', label: 'LAN' },
+  { value: 'B', label: 'Peripherals' },
+  { value: 'C', label: 'Systems' },
 ];
 
 const buildingCategories = [
@@ -179,7 +178,10 @@ export default function Create() {
       };
 
       const complaint = {
-        type: type.value,
+        type: {
+          value: type.value,
+          label: type.label,
+        },
         details,
         building: buildingOptions ? buildingOptions.value : building.value,
         exactLocation,
@@ -196,11 +198,11 @@ export default function Create() {
         updateSchema(userObj, updatedComplaint);
         updateSchema(superAdmin, updatedComplaint);
 
-        if (updatedComplaint.type === 'A') {
+        if (updatedComplaint.type.value === 'A') {
           updateSchema(A, updatedComplaint);
-        } else if (updatedComplaint.type === 'B') {
+        } else if (updatedComplaint.type.value === 'B') {
           updateSchema(B, updatedComplaint);
-        } else if (updatedComplaint.type === 'C') {
+        } else if (updatedComplaint.type.value === 'C') {
           updateSchema(C, updatedComplaint);
         }
 

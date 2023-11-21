@@ -24,7 +24,7 @@ export default function QueryList({ queries, isAdmin }) {
       {queries.length === 0 && <p>No complaints yet!</p>}
       {queries.map((query) => (
         <Link to={`/query/${query.complaintId}`} key={query.complaintId}>
-          <h3>{query.type}</h3>
+          <h3>{query.type.label}</h3>
           <p>Created on {formatDate(query.createdAt)}</p>
           <h4>{textDetails(query.details, 40)}</h4>
           {isAdmin && (

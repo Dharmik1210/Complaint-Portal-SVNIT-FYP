@@ -109,11 +109,11 @@ export default function Query() {
         deleteComplaint(userObj);
         deleteComplaint(superAdmin);
 
-        if (complaint.type === 'A') {
+        if (complaint.type.value === 'A') {
           deleteComplaint(A);
-        } else if (complaint.type === 'B') {
+        } else if (complaint.type.value === 'B') {
           deleteComplaint(B);
-        } else if (complaint.type === 'C') {
+        } else if (complaint.type.value === 'C') {
           deleteComplaint(C);
         }
 
@@ -159,11 +159,11 @@ export default function Query() {
             updateSchema(userObj, status);
             updateSchema(superAdmin, status);
 
-            if (complaint.type === 'A') {
+            if (complaint.type.value === 'A') {
               updateSchema(A, status);
-            } else if (complaint.type === 'B') {
+            } else if (complaint.type.value === 'B') {
               updateSchema(B, status);
-            } else if (complaint.type === 'C') {
+            } else if (complaint.type.value === 'C') {
               updateSchema(C, status);
             }
           }
@@ -189,11 +189,11 @@ export default function Query() {
             updateSchema(userObj, status);
             updateSchema(superAdmin, status);
 
-            if (complaint.type === 'A') {
+            if (complaint.type.value === 'A') {
               updateSchema(A, status);
-            } else if (complaint.type === 'B') {
+            } else if (complaint.type.value === 'B') {
               updateSchema(B, status);
-            } else if (complaint.type === 'C') {
+            } else if (complaint.type.value === 'C') {
               updateSchema(C, status);
             }
           }
@@ -241,7 +241,7 @@ export default function Query() {
                   </p>
                 </li>
                 <li>
-                  <span>Type :</span> {complaint.type}
+                  <span>Type :</span> {complaint.type.label}
                 </li>
                 <li>
                   <span>Details:</span> {complaint.details}
