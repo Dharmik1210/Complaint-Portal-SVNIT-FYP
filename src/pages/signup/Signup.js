@@ -247,9 +247,6 @@ export default function Login() {
           )}
         </div>
       )}
-      <div className="forget-password">
-        <Link to="/password-reset">forget password ?</Link>
-      </div>
     </div>
   );
 }
