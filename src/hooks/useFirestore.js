@@ -1,9 +1,9 @@
-import { useReducer, useEffect, useState } from 'react';
+import { useReducer, useEffect, useState } from "react";
 import {
   projectFirestore,
   timestamp,
   projectStorage,
-} from '../firebase/config';
+} from "../firebase/config";
 
 let initialState = {
   document: null,
@@ -14,25 +14,25 @@ let initialState = {
 
 const firestoreReducer = (state, action) => {
   switch (action.type) {
-    case 'IS_PENDING':
+    case "IS_PENDING":
       return { isPending: true, document: null, success: false, error: null };
-    case 'ADDED_DOCUMENT':
+    case "ADDED_DOCUMENT":
       return {
         isPending: false,
         document: action.payload,
         success: true,
         error: null,
       };
-    case 'DELETED_DOCUMENT':
+    case "DELETED_DOCUMENT":
       return { isPending: false, document: null, success: true, error: null };
-    case 'ERROR':
+    case "ERROR":
       return {
         isPending: false,
         document: null,
         success: false,
         error: action.payload,
       };
-    case 'UPDATED_DOCUMENT':
+    case "UPDATED_DOCUMENT":
       return {
         isPending: false,
         document: action.payload,
@@ -60,7 +60,7 @@ export const useFirestore = (collection) => {
 
   // add a document
   const addDocument = async (doc, image) => {
-    dispatch({ type: 'IS_PENDING' });
+    dispatch({ type: "IS_PENDING" });
 
     try {
       // create new document
@@ -68,7 +68,7 @@ export const useFirestore = (collection) => {
       const addedDocument = await ref.add({ ...doc, createdAt });
 
       // upload image to storage
-      const uploadPath = `complaints/${addedDocument.id}/${image.name}`;
+      const uploadPath = `complaints/${addedDocument.id}/${addedDocument.id}`;
       const img = await projectStorage.ref(uploadPath).put(image);
       const imgURL = await img.ref.getDownloadURL();
 
@@ -84,43 +84,47 @@ export const useFirestore = (collection) => {
       // console.log('id', addedDocument.complaintId);
 
       dispatchIfNotCancelled({
-        type: 'ADDED_DOCUMENT',
+        type: "ADDED_DOCUMENT",
         payload: addUpdatedDocument,
       });
       return addUpdatedDocument;
     } catch (err) {
-      console.log('erro1', err);
-      dispatchIfNotCancelled({ type: 'ERROR', payload: err.message });
+      dispatchIfNotCancelled({ type: "ERROR", payload: err.message });
     }
   };
 
   // delete a document
   const deleteDocument = async (id) => {
-    dispatch({ type: 'IS_PENDING' });
+    dispatch({ type: "IS_PENDING" });
 
     try {
+      // delete image
+      const uploadPath = `complaints/${id}/${id}`;
+      await projectStorage.ref(uploadPath).delete();
+
+      // delete document
       await ref.doc(id).delete();
-      dispatchIfNotCancelled({ type: 'DELETED_DOCUMENT' });
+      dispatchIfNotCancelled({ type: "DELETED_DOCUMENT" });
     } catch (err) {
-      dispatchIfNotCancelled({ type: 'ERROR', payload: 'could not delete' });
+      dispatchIfNotCancelled({ type: "ERROR", payload: "could not delete" });
     }
   };
 
   // update a document
   const updateDocument = async (id, updates) => {
-    dispatch({ type: 'IS_PENDING' });
+    dispatch({ type: "IS_PENDING" });
 
     try {
       const updatedDocument = await ref.doc(id).update(updates);
 
       dispatchIfNotCancelled({
-        type: 'UPDATED_DOCUMENT',
+        type: "UPDATED_DOCUMENT",
         payload: updatedDocument,
       });
       return updatedDocument;
     } catch (error) {
       console.log(error);
-      dispatchIfNotCancelled({ type: 'ERROR', payload: error });
+      dispatchIfNotCancelled({ type: "ERROR", payload: error });
       return null;
     }
   };
