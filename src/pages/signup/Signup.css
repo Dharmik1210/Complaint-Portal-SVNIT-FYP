@@ -23,6 +23,20 @@
   border: 1px solid var(--primary-color);
 }
 
+.signup .forget-password {
+  text-align: right;
+  padding-top: 12px;
+}
+
+.signup .forget-password a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+.signup .forget-password a:hover {
+  text-decoration: underline;
+}
+
 .signup .verification-guide {
   background-color: #f3f3f3;
   border: 1px solid #ccc;

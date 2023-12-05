@@ -9,7 +9,9 @@ export const useVerification = () => {
 
     try {
       // send verification email
-      await user.sendEmailVerification();
+      await user.sendEmailVerification({
+        url: "https://complaint-portal-svnit.vercel.app/"
+      });
 
       if (!isCancelled) {
         setError(null);

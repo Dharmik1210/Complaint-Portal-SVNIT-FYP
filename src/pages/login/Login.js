@@ -1,14 +1,15 @@
-import { useState, useEffect } from 'react';
-import { useLogin } from '../../hooks/useLogin';
-import { useVerification } from '../../hooks/useVerification';
-import { useAuthContext } from '../../hooks/useAuthContext';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useLogin } from "../../hooks/useLogin";
+import { useVerification } from "../../hooks/useVerification";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 // styles
-import './Login.css';
+import "./Login.css";
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [verificationTimer, setVerificationTimer] = useState(0);
   const { login, isPending, error } = useLogin();
   const { verification, error: verificationError } = useVerification();
@@ -103,6 +104,9 @@ export default function Login() {
           )}
         </div>
       )}
+      <div className="forget-password">
+        <Link to="/password-reset">forget password ?</Link>
+      </div>
     </div>
   );
 }

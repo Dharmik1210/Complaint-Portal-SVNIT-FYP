@@ -1,65 +1,67 @@
-import { useState, useEffect } from 'react';
-import { useSignup } from '../../hooks/useSignup';
-import { useVerification } from '../../hooks/useVerification';
-import { useAuthContext } from '../../hooks/useAuthContext';
-import './Signup.css';
-import Select from 'react-select';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useSignup } from "../../hooks/useSignup";
+import { useVerification } from "../../hooks/useVerification";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import Select from "react-select";
+
+import "./Signup.css";
 
 const customStyles = {
   control: (provided) => ({
     ...provided,
-    cursor: 'pointer',
+    cursor: "pointer",
 
-    '&:hover': {
-      cursor: 'pointer',
+    "&:hover": {
+      cursor: "pointer",
     },
   }),
   option: (provided, state) => ({
     ...provided,
-    cursor: 'pointer',
+    cursor: "pointer",
   }),
 };
 
 const departmentOptions = [
-  { value: 'CSE', label: 'CSE' },
-  { value: 'AI', label: 'AI' },
-  { value: 'ECE', label: 'ECE' },
-  { value: 'EE', label: 'EE' },
-  { value: 'ME', label: 'ME' },
-  { value: 'CE', label: 'CE' },
-  { value: 'CH', label: 'CH' },
-  { value: 'Chemistry', label: 'Chemistry' },
-  { value: 'Mathematics', label: 'Mathematics' },
-  { value: 'Physics', label: 'Physics' },
-  { value: 'Management Studies', label: 'Management Studies' },
-  { value: 'Humanities', label: 'Humanities' },
+  { value: "CSE", label: "CSE" },
+  { value: "AI", label: "AI" },
+  { value: "ECE", label: "ECE" },
+  { value: "EE", label: "EE" },
+  { value: "ME", label: "ME" },
+  { value: "CE", label: "CE" },
+  { value: "CH", label: "CH" },
+  { value: "Chemistry", label: "Chemistry" },
+  { value: "Mathematics", label: "Mathematics" },
+  { value: "Physics", label: "Physics" },
+  { value: "Management Studies", label: "Management Studies" },
+  { value: "Humanities", label: "Humanities" },
 
   // Add other department options here
 ];
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [emailErr, setEmailErr] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [admissionNo, setAdmissionNo] = useState('');
-  const [name, setName] = useState('');
-  const [mobileNo, setMobileNo] = useState('');
-  const [mobileNoError, setMobileNoError] = useState('');
+  const [email, setEmail] = useState("");
+  const [emailErr, setEmailErr] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [admissionNo, setAdmissionNo] = useState("");
+  const [name, setName] = useState("");
+  const [mobileNo, setMobileNo] = useState("");
+  const [mobileNoError, setMobileNoError] = useState("");
   const [department, setDepartment] = useState(null);
-  const [departmentErr, setDepartmentErr] = useState('');
-  const [currentAddress, setCurrentAddress] = useState('');
+  const [departmentErr, setDepartmentErr] = useState("");
+  const [currentAddress, setCurrentAddress] = useState("");
   const [verificationTimer, setVerificationTimer] = useState(0);
   const { signup, isPending, error } = useSignup();
   const { verification, error: verificationError } = useVerification();
   const { user } = useAuthContext();
 
   useEffect(() => {
-    setPasswordError('');
-    setMobileNoError('');
-    setDepartmentErr('');
-    setEmailErr('');
+    setPasswordError("");
+    setMobileNoError("");
+    setDepartmentErr("");
+    setEmailErr("");
   }, [password, confirmPassword, mobileNo, department, email]);
 
   useEffect(() => {
@@ -75,19 +77,19 @@ export default function Login() {
 
   const isValid = () => {
     if (password !== confirmPassword) {
-      setPasswordError('Passwords do not match');
+      setPasswordError("Passwords do not match");
       return false;
     }
     if (!department) {
-      setDepartmentErr('Select Department');
+      setDepartmentErr("Select Department");
       return false;
     }
     if (!mobileNo.match(/^\d{10}$/)) {
-      setMobileNoError('Invalid Mobile Number');
+      setMobileNoError("Invalid Mobile Number");
       return false;
     }
-    if (!email.endsWith('svnit.ac.in')) {
-      setEmailErr('Please enter svnit email');
+    if (!email.endsWith("svnit.ac.in")) {
+      setEmailErr("Please enter svnit email");
     } else {
       return true;
     }
@@ -104,7 +106,7 @@ export default function Login() {
         mobileNo,
         department: department.value,
         currentAddress,
-        adminType: 'student',
+        adminType: "student",
         complaints: [],
       };
       // console.log(userDetails, password);
@@ -245,6 +247,9 @@ export default function Login() {
           )}
         </div>
       )}
+      <div className="forget-password">
+        <Link to="/password-reset">forget password ?</Link>
+      </div>
     </div>
   );
 }

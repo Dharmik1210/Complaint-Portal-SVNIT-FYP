@@ -16,6 +16,7 @@ import UpdateProfile from "./pages/profile/UpdateProfile";
 import Announcement from "./pages/announcement/Announcement";
 import Resolved from "./pages/resolved/Resolved";
 import Sidebar from "./components/Sidebar";
+import PasswordReset from "./components/PasswordReset";
 
 function App() {
   const { authIsReady, user } = useAuthContext();
@@ -69,6 +70,20 @@ function App() {
                     )
                   ) : (
                     <Signup />
+                  )
+                }
+              />
+              <Route
+                path="/password-reset"
+                element={
+                  user ? (
+                    user.emailVerified ? (
+                      <Navigate to="/" />
+                    ) : (
+                      <PasswordReset />
+                    )
+                  ) : (
+                    <PasswordReset />
                   )
                 }
               />
