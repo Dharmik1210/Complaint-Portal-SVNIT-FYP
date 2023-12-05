@@ -107,7 +107,7 @@ export default function UpdateProfile() {
         />
       </label>
       <label>
-        <span>Admission No:</span>
+        <span>Admission No / Employee ID:</span>
         <input
           type="text"
           required

@@ -1,10 +1,5 @@
-/* Profile.css */
-
-/* Style the profile-page container */
 .profile-page {
-  /* transform: scale(1.15); */
   max-width: 500px;
-  /* height: 350px; */
   margin: 0 auto;
   padding: 30px;
   background-color: #f7f7f7;
@@ -27,9 +22,6 @@
   padding: 0;
   margin: 0;
 }
-/* ul:first-child li {
-    margin-bottom: 20px;
-  } */
 
 .profile-page li {
   margin-bottom: 10px;
@@ -37,38 +29,35 @@
   align-items: center;
   flex-wrap: nowrap;
 }
+
 .profile-page li:last-child {
   margin-bottom: 0%;
 }
-/* Style the spans within list items */
+
 .profile-page li span {
   font-weight: bold;
   padding-right: 15px;
   color: #555;
   min-width: 140px;
-  flex-basis: 120px;
-  /* padding-right: 10px; */
+  flex-basis: 151px;
 }
+
 .general-section {
   padding-bottom: 5px;
-  /* border-bottom: 1px solid #ccc; */
   margin-bottom: 20px;
 }
 
-/* Style the "Contact Information" section */
 .contact-section {
   margin-top: 15px;
   padding-bottom: 5px;
 }
+
 .profile-page .btn {
   background: #fff;
   padding: 8px 12px;
   margin-top: 20px;
   margin-bottom: 0;
-
-  /* align-items: self-end; */
   margin-left: 333px;
-  /* margin-bottom: 50px; */
   border-radius: 50px;
   width: 33%;
   color: var(--primary-color);
