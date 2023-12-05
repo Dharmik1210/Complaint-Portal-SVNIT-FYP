@@ -1,19 +1,19 @@
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { useDocument } from '../../hooks/useDocument';
-import { useAuthContext } from '../../hooks/useAuthContext';
-import { useFirestore } from '../../hooks/useFirestore';
-import Constants from '../../constants/constants';
-import { format } from 'date-fns';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import Lightbox from 'react-awesome-lightbox';
-import Swal from 'sweetalert2';
-import 'react-awesome-lightbox/build/style.css';
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { useDocument } from "../../hooks/useDocument";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { useFirestore } from "../../hooks/useFirestore";
+import Constants from "../../constants/constants";
+import { format } from "date-fns";
+import { useState } from "react";
+import { useEffect } from "react";
+import Lightbox from "react-awesome-lightbox";
+import Swal from "sweetalert2";
+import "react-awesome-lightbox/build/style.css";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 // styles
-import './Query.css';
-import { timestamp } from '../../firebase/config';
+import "./Query.css";
+import { timestamp } from "../../firebase/config";
 
 export default function Query() {
   const { id } = useParams();
@@ -24,29 +24,29 @@ export default function Query() {
   const [userObj, setUserObj] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [showChat, setShowChat] = useState(false);
-  const [newComment, setNewComment] = useState('');
+  const [newComment, setNewComment] = useState("");
 
-  const { updateDocument, response: updateRes } = useFirestore('users');
+  const { updateDocument, response: updateRes } = useFirestore("users");
   const {
     deleteDocument,
     updateDocument: updatedComplaint,
     response: deleteRes,
-  } = useFirestore('complaints');
+  } = useFirestore("complaints");
   const { document: complaintDoc, error: complaintError } = useDocument(
-    'complaints',
+    "complaints",
     id
   );
   const { document: userDoc, error: userError } = useDocument(
-    'users',
+    "users",
     complaint ? complaint.createdBy.id : user.uid
   );
   const { document: superAdmin, error: superAdminError } = useDocument(
-    'users',
+    "users",
     Constants.SUPER_ADMIN_ID
   );
-  const { document: A, error: AError } = useDocument('users', Constants.A_ID);
-  const { document: B, error: BError } = useDocument('users', Constants.B_ID);
-  const { document: C, error: CError } = useDocument('users', Constants.C_ID);
+  const { document: A, error: AError } = useDocument("users", Constants.A_ID);
+  const { document: B, error: BError } = useDocument("users", Constants.B_ID);
+  const { document: C, error: CError } = useDocument("users", Constants.C_ID);
 
   // fetch from database
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function Query() {
       setComplaint(complaintDoc);
     }
     if (userDoc) {
-      if (userDoc.adminType !== 'student') {
+      if (userDoc.adminType !== "student") {
         setIsAdmin(true);
       }
       setUserObj(userDoc);
@@ -75,7 +75,7 @@ export default function Query() {
     const date = new Date(
       timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
     );
-    const formattedDate = format(date, 'dd-MM-yyyy HH:mm:ss');
+    const formattedDate = format(date, "dd-MM-yyyy HH:mm:ss");
     return formattedDate;
   };
 
@@ -97,33 +97,33 @@ export default function Query() {
   const handleDelete = (e) => {
     e.preventDefault();
     Swal.fire({
-      title: 'Are you sure you want to delete this complaint?',
-      text: 'This action cannot be undone',
-      icon: 'warning',
+      title: "Are you sure you want to delete this complaint?",
+      text: "This action cannot be undone",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
         // delete complaint from individual schema
         deleteComplaint(userObj);
         deleteComplaint(superAdmin);
 
-        if (complaint.type.value === 'A') {
+        if (complaint.type.value === "A") {
           deleteComplaint(A);
-        } else if (complaint.type.value === 'B') {
+        } else if (complaint.type.value === "B") {
           deleteComplaint(B);
-        } else if (complaint.type.value === 'C') {
+        } else if (complaint.type.value === "C") {
           deleteComplaint(C);
         }
 
         // delete from complaints schema
         deleteDocument(id);
 
-        Swal.fire('Deleted!', 'The complaint has been deleted.', 'success');
-        navigate('/');
+        Swal.fire("Deleted!", "The complaint has been deleted.", "success");
+        navigate("/");
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelled', 'The complaint has not been deleted.', 'error');
+        Swal.fire("Cancelled", "The complaint has not been deleted.", "error");
       }
     });
   };
@@ -131,10 +131,11 @@ export default function Query() {
   //complaint schema update
   const updateSchema = (object, status) => {
     const { id: uid, ...newObject } = object;
-    console.log('object', object);
+    console.log("object", object);
     const updatedComplaints = newObject.complaints.map((complaint) => {
       if (complaint.complaintId === id) {
-        return { ...complaint, status: status };
+        const resolvedBy = { id: user.uid, displayName: user.displayName };
+        return { ...complaint, status: status, resolvedBy: resolvedBy };
       }
       return complaint;
     });
@@ -145,64 +146,74 @@ export default function Query() {
 
   //status change logic
   const handleStatusChange = (status) => {
-    if (status === 'accepted') {
+    if (status === "solved") {
       Swal.fire({
-        title: 'Are you sure?',
-        text: 'This will mark complaint as Resolved',
-        icon: 'warning',
+        title: "Are you sure?",
+        text: "This will mark complaint as Resolved",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'No',
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
       }).then((result) => {
         if (result.isConfirmed) {
           if (userObj && superAdmin && A && B && C) {
             updateSchema(userObj, status);
             updateSchema(superAdmin, status);
 
-            if (complaint.type.value === 'A') {
+            if (complaint.type.value === "A") {
               updateSchema(A, status);
-            } else if (complaint.type.value === 'B') {
+            } else if (complaint.type.value === "B") {
               updateSchema(B, status);
-            } else if (complaint.type.value === 'C') {
+            } else if (complaint.type.value === "C") {
               updateSchema(C, status);
             }
           }
 
           // update complaint schema
-          const updateComplaint = { ...complaint, status: status };
+          const resolvedBy = { id: user.uid, displayName: user.displayName };
+          const updateComplaint = {
+            ...complaint,
+            status: status,
+            resolvedBy: resolvedBy,
+          };
           updatedComplaint(id, updateComplaint);
-          Swal.fire('Resolved!', 'Complaint marked as resolved', 'success');
-          navigate('/');
+          Swal.fire("Resolved!", "Complaint marked as resolved", "success");
+          navigate("/");
         }
       });
-    } else if (status === 'rejected') {
+    } else if (status === "rejected") {
       Swal.fire({
-        title: 'Are you sure?',
-        text: 'This will mark complaint as rejected',
-        icon: 'warning',
+        title: "Are you sure?",
+        text: "This will mark complaint as rejected",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'No',
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
       }).then((result) => {
         if (result.isConfirmed) {
           if (userObj && superAdmin && A && B && C) {
             updateSchema(userObj, status);
             updateSchema(superAdmin, status);
 
-            if (complaint.type.value === 'A') {
+            if (complaint.type.value === "A") {
               updateSchema(A, status);
-            } else if (complaint.type.value === 'B') {
+            } else if (complaint.type.value === "B") {
               updateSchema(B, status);
-            } else if (complaint.type.value === 'C') {
+            } else if (complaint.type.value === "C") {
               updateSchema(C, status);
             }
           }
 
           // update complaint schema
-          const updateComplaint = { ...complaint, status: status };
+          const resolvedBy = { id: user.uid, displayName: user.displayName };
+          const updateComplaint = {
+            ...complaint,
+            status: status,
+            resolvedBy: resolvedBy,
+          };
           updatedComplaint(id, updateComplaint);
-          Swal.fire('Rejected!', 'Complaint marked as rejected', 'success');
-          navigate('/');
+          Swal.fire("Rejected!", "Complaint marked as rejected", "success");
+          navigate("/");
         }
       });
     }
@@ -221,7 +232,7 @@ export default function Query() {
       comments: [...complaint.comments, commentToAdd],
     });
     if (!deleteRes.error) {
-      setNewComment('');
+      setNewComment("");
     }
   };
 
@@ -256,14 +267,17 @@ export default function Query() {
                   <span>Status:</span> {complaint.status}
                 </li>
                 <li>
-                  <span>Raised By:</span>{' '}
+                  <span>Raised By:</span>{" "}
                   <Link to={`/profile/${complaint.createdBy.id}`}>
                     {complaint.createdBy.displayName}
                   </Link>
                 </li>
-                {complaint.status !== 'pending' && (
+                {complaint.status !== "pending" && (
                   <li>
-                    <span>{complaint.status} by : </span>
+                    <span>{complaint.status} by : </span>{" "}
+                    <Link to={`/profile/${complaint.resolvedBy.id}`}>
+                      {complaint.resolvedBy.displayName}
+                    </Link>
                   </li>
                 )}
                 <li>
@@ -277,7 +291,7 @@ export default function Query() {
               </ul>
             </div>
 
-            {complaint.status === 'pending' &&
+            {complaint.status === "pending" &&
               !(updateRes.isPending || deleteRes.isPending) &&
               !isAdmin && (
                 <button className="btn" onClick={handleDelete}>
@@ -290,18 +304,18 @@ export default function Query() {
               </button>
             )}
             <div className="accept">
-              {complaint.status === 'pending' && isAdmin && (
+              {complaint.status === "pending" && isAdmin && (
                 <button
                   className="btn"
-                  onClick={() => handleStatusChange('accepted')}
+                  onClick={() => handleStatusChange("solved")}
                 >
                   Solved
                 </button>
               )}
-              {complaint.status === 'pending' && isAdmin && (
+              {complaint.status === "pending" && isAdmin && (
                 <button
                   className="btn"
-                  onClick={() => handleStatusChange('rejected')}
+                  onClick={() => handleStatusChange("rejected")}
                 >
                   Reject
                 </button>
@@ -343,6 +357,9 @@ export default function Query() {
                     <h4>Complaint Comments</h4>
 
                     <ul>
+                      {complaint.comments.length === 0 && (
+                        <h5>no comments yet!</h5>
+                      )}
                       {complaint.comments.length > 0 &&
                         complaint.comments.map((comment) => (
                           <li key={comment.id}>
@@ -367,21 +384,22 @@ export default function Query() {
                         ))}
                     </ul>
 
-                    {user.photoURL !== 'student' && (
-                      <form
-                        className="add-comment"
-                        onSubmit={handleSubmitComment}
-                      >
-                        <label>
-                          <span>Add new comment:</span>
-                          <textarea
-                            onChange={(e) => setNewComment(e.target.value)}
-                            value={newComment}
-                          ></textarea>
-                        </label>
-                        <button className="btn">Add Comment</button>
-                      </form>
-                    )}
+                    {user.photoURL !== "student" &&
+                      complaint.status === "pending" && (
+                        <form
+                          className="add-comment"
+                          onSubmit={handleSubmitComment}
+                        >
+                          <label>
+                            <span>Add new comment:</span>
+                            <textarea
+                              onChange={(e) => setNewComment(e.target.value)}
+                              value={newComment}
+                            ></textarea>
+                          </label>
+                          <button className="btn">Add Comment</button>
+                        </form>
+                      )}
                   </div>
                 </div>
               </div>

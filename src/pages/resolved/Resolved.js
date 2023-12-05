@@ -109,7 +109,7 @@ export default function Resolved() {
           case 'all':
             return true;
           case 'solved':
-            return query.status === 'accepted';
+            return query.status === 'solved';
           case 'rejected':
             return query.status === secondFilter;
           default:

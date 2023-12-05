@@ -77,18 +77,18 @@ export default function Dashboard() {
       const pendingComplaints = document.complaints.filter(
         (complaint) => complaint.status === 'pending'
       );
-      const acceptedComplaints = document.complaints.filter(
-        (complaint) => complaint.status === 'accepted'
+      const solvedComplaints = document.complaints.filter(
+        (complaint) => complaint.status === 'solved'
       );
       const rejectedComplaints =
         document.complaints.length -
-        (pendingComplaints.length + acceptedComplaints.length);
+        (pendingComplaints.length + solvedComplaints.length);
       // console.log(pendingComplaints.length);
       // console.log(rejectedComplaints);
-      // console.log(acceptedComplaints.length);
+      // console.log(solvedComplaints.length);
       // console.log(document.complaints.length);
       setPending(pendingComplaints.length);
-      setAccept(acceptedComplaints.length);
+      setAccept(solvedComplaints.length);
       setReject(rejectedComplaints.length);
       setComplaints(pendingComplaints);
       setIsAdmin(document.adminType !== 'student');
@@ -109,7 +109,7 @@ export default function Dashboard() {
 
   // const chartData = {
   //   pending: pending,
-  //   accepted: accept,
+  //   solved: accept,
   //   rejected: reject,
   // };
   const changeFilter = (newFilter) => {
