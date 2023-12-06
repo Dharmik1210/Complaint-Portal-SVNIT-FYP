@@ -179,6 +179,7 @@ export default function Create() {
     if (isValid()) {
       const createdBy = {
         displayName: user.displayName,
+        admissionNo: userObj.admissionNo,
         id: user.uid,
       };
 

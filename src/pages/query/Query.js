@@ -269,7 +269,10 @@ export default function Query() {
                 <li>
                   <span>Raised By:</span>{" "}
                   <Link to={`/profile/${complaint.createdBy.id}`}>
-                    {complaint.createdBy.displayName}
+                    {complaint.createdBy.displayName +
+                      " (" +
+                      complaint.createdBy.admissionNo +
+                      ")"}
                   </Link>
                 </li>
                 {complaint.status !== "pending" && (

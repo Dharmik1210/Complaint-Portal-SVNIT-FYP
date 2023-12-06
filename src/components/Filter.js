@@ -7,7 +7,6 @@ export default function QueryFilter({ changeFilter, filterList }) {
   const [currentFilter, setCurrentFilter] = useState('all');
   const [isNestedOpen, setIsNestedOpen] = useState(false);
   const [nestedFilter, setNestedFilter] = useState(null);
-  console.log(currentFilter, nestedFilter);
 
   const handleClick = (e) => {
     const newFilter = e.target.value;

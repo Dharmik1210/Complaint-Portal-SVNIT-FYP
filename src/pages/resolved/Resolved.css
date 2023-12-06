@@ -1,3 +1,29 @@
 .resolved {
   padding-bottom: 50px;
 }
+
+.resolved .search-container {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  border: 1px solid black;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.resolved .search-input {
+  border: none;
+  background-color: transparent;
+  padding: 8px;
+  margin-right: 8px;
+  outline: none;
+}
+
+.resolved .search-container:hover {
+  border: 1px solid var(--primary-color);
+}
+
+.resolved .search-icon {
+  padding-left: 10px;
+  cursor: pointer;
+}

@@ -1,9 +1,9 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
-// styles
 import "./QueryList.css";
 
-export default function QueryList({ queries, isAdmin }) {
+export default function QueryList({ queries, isAdmin, keyword }) {
   const textDetails = (text, maxLength) => {
     if (text.length <= maxLength) {
       return text;
@@ -20,14 +20,36 @@ export default function QueryList({ queries, isAdmin }) {
     return formattedDate;
   };
 
+  const highlightMatchedText = (text) => {
+    const lowerText = text.toLowerCase();
+    const lowerKeyword = keyword.toLowerCase();
+
+    if (!lowerText.includes(lowerKeyword)) {
+      return text;
+    }
+
+    const startIndex = lowerText.indexOf(lowerKeyword);
+    const endIndex = startIndex + keyword.length;
+
+    return (
+      <>
+        {text.substring(0, startIndex)}
+        <span className="highlighted-text">
+          {text.substring(startIndex, endIndex)}
+        </span>
+        {text.substring(endIndex)}
+      </>
+    );
+  };
+
   return (
     <div className="query-list">
       {queries.length === 0 && <p>No complaints yet!</p>}
       {queries.map((query) => (
         <Link to={`/query/${query.complaintId}`} key={query.complaintId}>
-          <h3>{query.type.label}</h3>
-          <p>Created on {formatDate(query.createdAt)}</p>
-          <h4>{textDetails(query.details, 38)}</h4>
+          <h3>{highlightMatchedText(query.type.label)}</h3>
+          <p>Created on {highlightMatchedText(formatDate(query.createdAt))}</p>
+          <h4>{highlightMatchedText(textDetails(query.details, 38))}</h4>
           {isAdmin && (
             <div className="query-by">
               <h4>
@@ -36,7 +58,7 @@ export default function QueryList({ queries, isAdmin }) {
                   className="profile-link"
                   to={`/profile/${query.createdBy.id}`}
                 >
-                  {query.createdBy.displayName}
+                  {highlightMatchedText(query.createdBy.admissionNo)}
                 </Link>
               </h4>
             </div>
@@ -49,7 +71,7 @@ export default function QueryList({ queries, isAdmin }) {
                   className="profile-link"
                   to={`/profile/${query.resolvedBy.id}`}
                 >
-                  {query.resolvedBy.displayName}
+                  {highlightMatchedText(query.resolvedBy.displayName)}
                 </Link>
               </h4>
             </div>

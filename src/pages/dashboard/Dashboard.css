@@ -8,7 +8,32 @@
   color: red;
   font-weight: 500;
   background-color: pink;
-  /* border: 1px solid black; */
   padding: 4px 0px 4px 0px;
   border-radius: 4px;
+}
+
+.dashboard .search-container {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  border: 1px solid black;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.dashboard .search-input {
+  border: none;
+  background-color: transparent;
+  padding: 8px;
+  margin-right: 8px;
+  outline: none;
+}
+
+.dashboard .search-container:hover {
+  border: 1px solid var(--primary-color);
+}
+
+.dashboard .search-icon {
+  padding-left: 10px;
+  cursor: pointer;
 }
