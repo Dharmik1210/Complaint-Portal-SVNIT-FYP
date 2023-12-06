@@ -121,19 +121,24 @@ export default function Dashboard() {
   };
 
   const queries = tempQueries
-    ? tempQueries.filter(
-        (query) =>
+    ? tempQueries.filter((query) => {
+        const admissionNoCondition =
+          user.photoURL !== "student" &&
+          query.createdBy.admissionNo
+            .toLowerCase()
+            .includes(keyword.toLowerCase());
+
+        return (
           textDetails(query.details, 38)
             .toLowerCase()
             .includes(keyword.toLowerCase()) ||
           query.type.label.toLowerCase().includes(keyword.toLowerCase()) ||
-          query.createdBy.admissionNo
-            .toLowerCase()
-            .includes(keyword.toLowerCase()) ||
+          admissionNoCondition ||
           formatDate(query.createdAt)
             .toLowerCase()
             .includes(keyword.toLowerCase())
-      )
+        );
+      })
     : null;
 
   return (
