@@ -4,6 +4,7 @@ import { useDocument } from "../../hooks/useDocument";
 import { useEffect } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useFirestore } from "../../hooks/useFirestore";
+import imageCompression from "browser-image-compression";
 import Constants from "../../constants/constants";
 import Select from "react-select";
 import Swal from "sweetalert2";
@@ -66,7 +67,7 @@ const customStyles = {
       cursor: "pointer",
     },
   }),
-  option: (provided, state) => ({
+  option: (provided) => ({
     ...provided,
     cursor: "pointer",
   }),
@@ -109,8 +110,12 @@ export default function Create() {
     setFormError(null);
   }, [type, details, building, buildingOptions, image, exactLocation]);
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     setImage(null);
+    setImgError(
+      "Wait, image is getting compressed"
+    );
+
     let selected = e.target.files[0];
 
     if (!selected) {
@@ -123,13 +128,16 @@ export default function Create() {
       return;
     }
 
-    if (selected.size > 150000) {
-      setImgError("Image file size must be less than 150Kb");
-      return;
-    }
+    const options = {
+      maxSizeMB: 0.1,
+      maxWidthOrHeight: 2048,
+      useWebWorker: true,
+    };
 
+    const compressedImage = await imageCompression(selected, options);
+
+    setImage(compressedImage);
     setImgError(null);
-    setImage(selected);
   };
 
   const isValid = () => {
@@ -179,7 +187,6 @@ export default function Create() {
     if (isValid()) {
       const createdBy = {
         displayName: user.displayName,
-        admissionNo: userObj.admissionNo,
         id: user.uid,
       };
 
@@ -285,13 +292,14 @@ export default function Create() {
         <label>
           <span>Add Image:</span>
           <input required type="file" onChange={handleFileChange} />
-          {/* {imgError && <div className="error">{imgError}</div>} */}
+          {imgError && <div className="error">{imgError}</div>}
         </label>
 
-        {!(addDocResponse.isPending || updateDocResponse.isPending) && (
-          <button className="btn">Raise Complaint</button>
-        )}
-        {(addDocResponse.isPending || updateDocResponse.isPending) && (
+        {!(addDocResponse.isPending || updateDocResponse.isPending) &&
+          !imgError && <button className="btn">Raise Complaint</button>}
+        {(addDocResponse.isPending ||
+          updateDocResponse.isPending ||
+          imgError) && (
           <button className="btn" disabled>
             Please Wait
           </button>
