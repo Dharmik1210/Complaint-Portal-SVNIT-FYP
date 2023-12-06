@@ -63,7 +63,8 @@ export default function Profile() {
           <h4>Admin Information</h4>
           <ul>
             <li>
-              <span>Name : </span> {user.name}
+              <span>Name : </span>
+              <span>{user.name}</span>
             </li>
             <li>
               <span>Email Address : </span> {user.email}

@@ -4,8 +4,6 @@
   margin-bottom: 20px;
   margin-left: 0;
   display: flex;
-  /* text-align: center; */
-  align-items: center;
 }
 
 .filter label {
@@ -55,4 +53,16 @@ option :hover {
 .filter option:hover {
   background-color: orange;
   color: black;
+}
+
+@media screen and (max-width: 550px) {
+  .filter {
+    flex-direction: column;
+    max-width: 200px;
+    margin-bottom: 20px;
+  }
+
+  .filter select {
+    margin-top: 10px;
+  }
 }

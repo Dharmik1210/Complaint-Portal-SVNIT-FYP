@@ -37,3 +37,9 @@
   padding-left: 10px;
   cursor: pointer;
 }
+
+@media screen and (max-width: 768px) {
+  .dashboard .announcement {
+    width: 100%;
+  }
+}

@@ -7,12 +7,9 @@
   position: relative;
   color: #fff;
   transition: transform 0.3s ease;
+  z-index: 4;
 }
 
-.sidebar.collapsed {
-  width: 50px;
-  transform: translateX(-235px);
-}
 .sidebar-content {
   position: fixed;
   width: inherit;
@@ -20,7 +17,6 @@
 
 .sidebar .user {
   font-weight: bold;
-  text-align: center;
   letter-spacing: 1px;
   padding: 40px 30px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
@@ -62,31 +58,82 @@
 .sidebar .links .active img {
   filter: invert(40%);
 }
-/* Add this to your Sidebar.css file */
 
-.toggle-button {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* background-color: #f4f4f4; Background color for the button */
+.sidebar-collapsed {
+  width: 52px;
+  min-width: 52px;
+  background: var(--primary-color);
+  min-height: 100vh;
+  box-sizing: border-box;
+  position: relative;
   color: #fff;
-  width: 40px; /* Adjust the width as needed */
-  height: 40px; /* Adjust the height as needed */
-  /* border-radius: 50%;  */
-  border-radius: 10px;
-  /* border-color: black; */
-  position: absolute;
-  margin-left: 10px;
-  top: 10px;
-  left: 10px;
-  transition: background-color 0.5 s ease; /* Add a transition for smoother hover effect */
-  z-index: 2;
-  /* Center the icon inside the button */
+  transition: transform 0.3s ease;
+  z-index: 4;
 }
 
-.toggle-button:hover {
-  /* background-color: #fff; */
-  transform: scale(1.1);
-  /* color: var(--primary-color); Change the background color on hover */
+.sidebar-content {
+  position: fixed;
+  width: inherit;
+}
+
+.sidebar-collapsed .user img {
+  padding: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-collapsed .links {
+  margin-top: 80px;
+  margin-left: 10px;
+}
+
+.sidebar-collapsed .links li {
+  margin-top: 10px;
+  opacity: 1;
+}
+
+.sidebar-collapsed .links a {
+  display: flex;
+  padding: 10px;
+  text-decoration: none;
+  width: 100%;
+  color: #fff;
+  box-sizing: border-box;
+  opacity: 1;
+}
+
+.sidebar-collapsed .links img {
+  margin-right: 10px;
+  filter: invert(100%);
+  width: 24px;
+  height: 27.2px;
+}
+
+.sidebar-collapsed .links a.active {
+  color: #555;
+  background: var(--bg-color);
+  border-radius: 20px 0 0 20px;
+}
+
+.sidebar-collapsed .links .active img {
+  filter: invert(40%);
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+  }
+
+  .sidebar .user .close-icon {
+    display: block;
+    width: 75px;
+    height: 75px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .sidebar .user img {
+    display: none;
+  }
 }

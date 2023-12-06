@@ -5,6 +5,7 @@
   grid-gap: 30px;
   margin-bottom: 10px;
 }
+
 /* query summary */
 .query-summary {
   background-color: #fff;
@@ -14,21 +15,25 @@
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 .query-summary ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
+
 .query-summary li {
   margin-bottom: 20px;
   display: flex;
   flex-wrap: nowrap;
   word-break: break-word;
 }
+
 .query-summary li:first-child {
   display: block;
   margin-bottom: 30px;
 }
+
 .query-summary li span {
   font-weight: bold;
   padding-right: 15px;
@@ -36,12 +41,6 @@
   min-width: 140px;
   flex-basis: 100px;
 }
-
-/* .query-summary .assigned-date {
-  margin: 10px 0;
-  font-size: 0.9em;
-  color: var(--title-color);
-} */
 
 .query-summary .details {
   margin: 5px 0;
@@ -55,10 +54,19 @@
   font-size: 0.9em;
 }
 
+.query-summary .comments-icon {
+  margin-top: 8px;
+}
+
+.query-summary .comments-icon span {
+  font-size: 1.2em;
+}
+
 .query .btn {
   border-radius: 4px;
   /* margin-bottom: 10px; */
 }
+
 .image {
   cursor: pointer;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -70,6 +78,7 @@
   max-height: 450px;
   object-fit: inherit;
 }
+
 .image:hover {
   opacity: 0.8;
 }
@@ -81,9 +90,11 @@
 .project-comments label {
   margin-bottom: 0px;
 }
+
 .add-comment {
   margin-top: 20px;
 }
+
 .project-comments textarea {
   min-height: 30px;
   font-size: 1.5em;
@@ -94,6 +105,7 @@
 .project-comments h4 {
   color: var(--heading-color);
 }
+
 .project-comments li {
   padding: 16px;
   border-radius: 4px;
@@ -102,17 +114,20 @@
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
   background: #fff;
 }
+
 .comment-author {
   display: flex;
   align-items: center;
   color: black;
   font-weight: 300;
 }
+
 .comment-date {
   color: var(--text-color);
   font-size: 0.9em;
   margin: 4px 0 10px;
 }
+
 .comment-content {
   color: black;
   font-size: 0.9em;
@@ -130,17 +145,21 @@
   scrollbar-width: 20px;
   scrollbar-color: #fff #e4e4e4;
 }
+
 /* Chrome, Edge, and Safari scrollbar styles */
 .project-comments::-webkit-scrollbar {
   width: 6px;
 }
+
 .project-comments::-webkit-scrollbar-track {
   background: #fff;
 }
+
 .project-comments::-webkit-scrollbar-thumb {
   border-radius: 10px;
   border: 3px solid #e4e4e4;
 }
+
 .chatbot-overlay {
   position: fixed;
   top: 0;
@@ -153,6 +172,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .chatbot-container {
   background-color: #fff;
   padding: 40px;
@@ -176,6 +196,7 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
 .close-btn {
   position: absolute;
   top: 10px;
@@ -187,4 +208,18 @@
   cursor: pointer;
   font-size: 20px;
   color: black;
+}
+
+@media screen and (max-width: 768px) {
+  .query-content {
+    display: block;
+  }
+
+  .image {
+    margin-top: 40px;
+  }
+
+  .query-summary .comments-icon span {
+    font-size: 1.3em;
+  }
 }

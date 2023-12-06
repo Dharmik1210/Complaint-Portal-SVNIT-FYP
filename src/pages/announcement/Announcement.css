@@ -67,3 +67,9 @@
   min-width: 140px;
   flex-basis: 100px;
 }
+
+@media screen and (max-width: 768px) {
+  .announcement {
+    width: 300px;
+  }
+}

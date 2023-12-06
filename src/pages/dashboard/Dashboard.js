@@ -149,7 +149,7 @@ export default function Dashboard() {
         </Marquee>
       )}
       {queries && (
-        <Filter changeFilter={changeFilter} filterList={filterList} />
+        <Filter changeFilter={changeFilter} filterList={filterList} type="location" />
       )}
       {queries && (
         <div className="search-container">

@@ -39,3 +39,15 @@
 .navbar a:hover {
   color: var(--primary-color);
 }
+
+@media (max-width: 768px) {
+  .navbar .logo .opened {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .navbar .logo .closed {
+    display: none;
+  }
+}

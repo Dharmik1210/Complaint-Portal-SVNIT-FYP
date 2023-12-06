@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom';
-import { useLogout } from '../hooks/useLogout';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { Link } from "react-router-dom";
+import { useLogout } from "../hooks/useLogout";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 // styles
-import './Navbar.css';
+import "./Navbar.css";
 
 //SVNIT LOGO
-import Logo from '../assets/NIT_Surat_Logo.svg';
+import Logo from "../assets/NIT_Surat_Logo.svg";
 
 export default function Navbar() {
   const { logout, isPending } = useLogout();
@@ -17,7 +17,8 @@ export default function Navbar() {
       <ul>
         <li className="logo">
           <img src={Logo} alt="SVNIT logo" />
-          <span>Web-based Complaint Portal</span>
+          <span className="opened">Web-based Complaint Portal</span>
+          <span className="closed">Complaint Portal</span>
         </li>
         {!user && (
           <>

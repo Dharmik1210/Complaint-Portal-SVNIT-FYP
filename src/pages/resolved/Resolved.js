@@ -164,12 +164,13 @@ export default function Resolved() {
   return (
     <div className="resolved">
       {queries_filtered && (
-        <Filter changeFilter={changeFilter} filterList={filterList} />
+        <Filter changeFilter={changeFilter} filterList={filterList} type="location" />
       )}
       {queries_filtered && (
         <Filter
           changeFilter={changeSecondFilter}
           filterList={secondFilterList}
+          type="status"
         />
       )}
       {queries_filtered && (

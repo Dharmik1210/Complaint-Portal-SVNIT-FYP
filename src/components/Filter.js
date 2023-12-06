@@ -3,7 +3,7 @@ import { useState } from 'react';
 // styles
 import './Filter.css';
 
-export default function QueryFilter({ changeFilter, filterList }) {
+export default function QueryFilter({ changeFilter, filterList, type }) {
   const [currentFilter, setCurrentFilter] = useState('all');
   const [isNestedOpen, setIsNestedOpen] = useState(false);
   const [nestedFilter, setNestedFilter] = useState(null);
@@ -31,7 +31,7 @@ export default function QueryFilter({ changeFilter, filterList }) {
 
   return (
     <div className="filter">
-      <label htmlFor="filterSelect">Filter by : </label>
+      <label htmlFor="filterSelect">Filter by {type} : </label>
       <select id="filterSelect" value={currentFilter} onChange={handleClick}>
         {filterList.map((f) => (
           <option key={f} value={f}>

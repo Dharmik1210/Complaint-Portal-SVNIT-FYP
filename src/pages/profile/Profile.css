@@ -39,7 +39,7 @@
   padding-right: 15px;
   color: #555;
   min-width: 140px;
-  flex-basis: 151px;
+  flex-basis: 120px;
 }
 
 .general-section {
@@ -57,9 +57,7 @@
   padding: 8px 12px;
   margin-top: 20px;
   margin-bottom: 0;
-  margin-left: 333px;
   border-radius: 50px;
-  width: 33%;
   color: var(--primary-color);
   cursor: pointer;
   font-size: 1em;
@@ -69,4 +67,22 @@
 .profile-page .btn:hover {
   color: #fff;
   background-color: var(--primary-color);
+}
+
+@media screen and (max-width: 768px) {
+  .profile-page .btn {
+    margin-left: auto;
+  }
+
+  .profile-page li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .profile-page li span:last-child {
+    flex-basis: 100%;
+    padding-right: 0;
+  }
 }
