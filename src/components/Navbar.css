@@ -44,6 +44,17 @@
   .navbar .logo .opened {
     display: none;
   }
+
+  .navbar .logo img {
+    width: 60px;
+    height: 60px;
+    margin-right: 2px;
+  }
+
+  .navbar .logo .closed {
+    display: inline-block;
+    transform: scale(0.85);
+  }
 }
 
 @media (min-width: 769px) {

@@ -55,3 +55,13 @@
 .query-list li {
   margin-right: 10px;
 }
+
+@media screen and (max-width: 768px) {
+  .query-list {
+    grid-template-columns: auto;
+  }
+
+  .query-list a {
+    width: fit-content;
+  }
+}

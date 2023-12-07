@@ -42,4 +42,8 @@
   .dashboard .announcement {
     width: 100%;
   }
+
+  .dashboard .search-container {
+    width: 269px;
+  }
 }
