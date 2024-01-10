@@ -13,7 +13,6 @@ Admins can efficiently manage complaints by category and location using this app
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
 * [![React][React.js]][React-url]
 * [![Firebase][Firebase.js]][Firebase-url]
