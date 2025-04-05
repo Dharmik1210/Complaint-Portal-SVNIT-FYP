@@ -1,20 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { usePasswordReset } from "../hooks/usePasswordReset";
 import "./PasswordReset.css";
 
 export default function PasswordReset() {
   const [email, setEmail] = useState("");
-  const [emailErr, setEmailErr] = useState(null);
+  const [emailErr, setEmailErr] = useState("");
   const [message, setMessage] = useState(false);
   const { passwordReset, error } = usePasswordReset();
 
-  useEffect(() => {
-    setEmailErr(null);
-  }, [email]);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    setEmailErr("");
     e.preventDefault();
-    passwordReset(email);
+    if (email.trim() == "") {
+      setEmailErr("Please enter your email address.");
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      setEmailErr("Invalid email address.");
+      return;
+    }
+    await passwordReset(email.trim());
     setMessage(true);
   };
 
@@ -25,19 +31,25 @@ export default function PasswordReset() {
         <label>
           <span>Email:</span>
           <input
-            type="email"
-            required
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailErr("");
+            }}
             value={email}
           />
         </label>
         {emailErr && <p className="error">{emailErr}</p>}
-        {!message && <button className="btn">Reset Password</button>}
-        {message && (
+        {!message &&
+          <button
+            className="btn"
+            type="submit"
+          >Reset Password</button>}
+        {/* {message && (
           <button className="btn" disabled>
             Wait
           </button>
-        )}
+        )} */}
         {error && <p className="error">{error}</p>}
         {message && (
           <div className="msg">
