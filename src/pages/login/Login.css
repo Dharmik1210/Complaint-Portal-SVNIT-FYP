@@ -18,6 +18,20 @@
   width: 100%;
 }
 
+.input-wrapper-password{
+  position: relative;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 15px;  /* Adjust position */
+  top: 75%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+  font-size: 18px; /* Adjust icon size */
+}
+
 .login input:hover {
   --primary-color: #199dcc;
   border: 1px solid var(--primary-color);

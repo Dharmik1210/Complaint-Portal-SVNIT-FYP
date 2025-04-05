@@ -23,16 +23,18 @@ export const useLogin = () => {
         setIsPending(false);
         setError(null);
       }
+
     } catch (error) {
-      // console.log(err, 'err');
       if (error.code === 'auth/network-request-failed') {
         setError('Check your internet connection');
       } else if (error.code === 'auth/invalid-login-credentials') {
         setError('check email or password');
-      } else {
-        setError(error.msg);
+      } else if(error.code === 'auth/invalid-email'){
+        setError('Invalid email address');  
+      } 
+      else {
+        setError(error.message);
       }
-
       setIsPending(false);
     }
   };

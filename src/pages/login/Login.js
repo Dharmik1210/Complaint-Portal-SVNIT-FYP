@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useLogin } from "../../hooks/useLogin";
 import { useVerification } from "../../hooks/useVerification";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 
 // styles
 import "./Login.css";
@@ -11,7 +12,9 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [verificationTimer, setVerificationTimer] = useState(0);
+  const [showPassword, setShowPassword] = useState(false)
   const { login, isPending, error } = useLogin();
+  const [formError, setFormError] = useState("");
   const { verification, error: verificationError } = useVerification();
   const { user } = useAuthContext();
 
@@ -22,9 +25,22 @@ export default function Login() {
     return () => clearInterval(timer);
   }, [verificationTimer]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(email, password);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email.trim() == "") {
+      setFormError("Email is required");
+      return;
+    }
+    if (!emailRegex.test(email.trim())) {
+      setFormError("Invalid email address");
+      return;
+    }
+    if (password.trim() == "") {
+      setFormError("Password is required");
+      return;
+    }
+    await login(email.trim(), password);
   };
 
   const handleVerification = (e) => {
@@ -35,34 +51,46 @@ export default function Login() {
 
   return (
     <div className="login">
+
       {!user && (
         <form onSubmit={handleSubmit}>
           <h2>Login</h2>
-          <label>
+          <label htmlFor="email">
             <span>Email:</span>
             <input
+              id="email"
               type="text"
-              required
               onChange={(e) => setEmail(e.target.value)}
               value={email}
             />
           </label>
-          <label>
-            <span>Password:</span>
-            <input
-              type="password"
-              required
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-            />
+          <label htmlFor="password">
+            <div className="input-wrapper-password">
+              <span>Password:</span>
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                style={{ paddingRight: "40px" }}
+              />
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className="eye-icon"
+              >
+                {password ? (!showPassword ? <FaRegEye /> : <FaRegEyeSlash />) : <></>}
+              </span>
+            </div>
           </label>
-          {!isPending && <button className="btn">Log in</button>}
+
+          {!isPending && <button className="btn">Login</button>}
           {isPending && (
             <button className="btn" disabled>
-              loading
+              Loading...
             </button>
           )}
           {error && <div className="error">{error}</div>}
+          {formError && <div className="error">{formError}</div>}
         </form>
       )}
       {user && (
@@ -105,7 +133,7 @@ export default function Login() {
         </div>
       )}
       <div className="forget-password">
-        <Link to="/password-reset">forget password ?</Link>
+        <Link to="/password-reset">forgot password?</Link>
       </div>
     </div>
   );
